@@ -1,1 +1,3 @@
-setup - 2h
+setup - 4h
+
+app - 2h

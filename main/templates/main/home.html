@@ -1,0 +1,43 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+    {% for message in messages%}
+        <p>{{message}}</p>
+    {% endfor %}
+
+<div style="display: flex; justify-content: space-around; align-items: center; margin-top: 100px;">
+    <form action="/" method="post">
+        {% csrf_token %}
+        <label for="id">Write your post id:</label>
+        <input type="number" id="id" name="id" minlength="1" maxlength="2" value=""><br><br>
+        <button type="submit" value="id" name="type">Submit</button>
+    </form>
+
+    <form action="/" method="post">
+        {% csrf_token %}
+        <label for="userId">Write your userId:</label>
+        <input type="number" id="userId" name="userId" minlength="1" maxlength="2" value=""><br><br>
+        <button type="submit" value="userId" name="type">Submit</button>
+    </form>
+</div>
+
+
+{% if new_post %}
+<div>
+    <p>id: {{new_post.id}}</p>
+    <p>userId: {{new_post.userId}}</p>
+    <p>title: {{new_post.title}}</p>
+    <p>body: {{new_post.body}}</p>
+</div>
+{% endif %}
+
+{% for post in posts %}
+    <div>
+        <p>userId: {{post.userId}}</p>
+        <p>title: {{post.title}}</p>
+        <p>body: {{post.body}}</p>
+    </div>
+{% endfor %}
+
+{% endblock %}

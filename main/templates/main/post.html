@@ -15,6 +15,8 @@
 </div>
 {% endif %}
 
+<a href="/">Go back to main page</a>
+
 <div style="display: flex; justify-content: space-around; align-items: center; margin-top: 100px;">
     <form action="/post/{{post.id}}" method="post">
         {% csrf_token %}

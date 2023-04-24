@@ -1,6 +1,7 @@
 from django.views.generic import View
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.http import HttpResponse
 import requests
 
 
@@ -36,9 +37,9 @@ class MyHome(View):
                 messages.error(request, "No posts with such userId")
                 return redirect('/')
             
-            return render(request, 'main/home.html', {'posts':posts})
-
-        return redirect('/')
+            return render(request, 'main/home.html', {'posts':posts})\
+        
+        return HttpResponse("Incorrect post request to homepage")
 
 
 class MyPost(View):
@@ -56,6 +57,10 @@ class MyPost(View):
             return redirect('/')
         
         elif request.POST['type'] == 'update':
-            pass
-            
-        return redirect('/')
+            post = Post.objects.get(id=postId)
+            post.title = request.POST['title']
+            post.body = request.POST['body']
+            post.save()
+            return render(request, 'main/post.html', {'post': post})
+
+        return HttpResponse("Incorrect post request to page/id view")

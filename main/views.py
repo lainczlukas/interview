@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 import requests
 
+import random
 
 from .models import Post
 # Create your views here.
@@ -37,7 +38,33 @@ class MyHome(View):
                 messages.error(request, "No posts with such userId")
                 return redirect('/')
             
-            return render(request, 'main/home.html', {'posts':posts})\
+            return render(request, 'main/home.html', {'posts':posts})
+        
+        elif request.POST['type'] == 'new':
+            userId = request.POST['userIdNew']
+            res = requests.get('https://jsonplaceholder.typicode.com/users', headers={'Accept': 'application/json'})
+            users = res.json()
+
+            for user in users:
+                print("User:", user['id'])
+                print("My user:", userId)
+                if int(user['id']) == int(userId):
+                    print("We did it")
+                    title = request.POST['title']
+                    body = request.POST['body']
+                    id = random.randint(101,999999)
+                    while Post.objects.filter(id=id).exists():
+                        id = random.randint(101,999999)
+                    post = Post(id=id, userId=userId, title=title, body=body)
+                    post.save()
+
+                    messages.success(request, "Post created succesfully")
+                    return render(request, 'main/home.html', {})
+
+            messages.error(request, "Invalid userId - no such user")
+            return render(request, 'main/home.html', {})
+
+
         
         return HttpResponse("Incorrect post request to homepage")
 

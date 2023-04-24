@@ -25,15 +25,17 @@
 
 {% if new_post %}
 <div>
-    <p>id: {{new_post.id}}</p>
-    <p>userId: {{new_post.userId}}</p>
-    <p>title: {{new_post.title}}</p>
-    <p>body: {{new_post.body}}</p>
+    <a href="/post/{{new_post.id}}">Edit/Delete post</a>
+        <p>id: {{new_post.id}}</p>
+        <p>userId: {{new_post.userId}}</p>
+        <p>title: {{new_post.title}}</p>
+        <p>body: {{new_post.body}}</p>
 </div>
 {% endif %}
 
 {% for post in posts %}
     <div>
+        <a href="/post/{{post.id}}">Edit/Delete post</a>
         <p>userId: {{post.userId}}</p>
         <p>title: {{post.title}}</p>
         <p>body: {{post.body}}</p>

@@ -1,3 +1,4 @@
+from django.views.generic import View
 from django.shortcuts import render, redirect
 from django.contrib import messages
 import requests
@@ -6,15 +7,12 @@ import requests
 from .models import Post
 # Create your views here.
 
-
-def my_home(request):
-    if request.method == "GET":
+class MyHome(View):
+    def get(self, request):
         return render(request, 'main/home.html', {})
-    
-    elif request.method == "POST":
-
+        
+    def post(self, request):
         if request.POST['type'] == 'id':
-            post = None
             my_id = int(request.POST['id'])
             post = Post.objects.filter(id=my_id)
             
@@ -40,3 +38,24 @@ def my_home(request):
             
             return render(request, 'main/home.html', {'posts':posts})
 
+        return redirect('/')
+
+
+class MyPost(View):
+    def get(self, request, postId):
+        post = Post.objects.filter(id=postId).first()
+        print(post)
+
+        if not post:
+            messages.error(request, "Invalid post id")
+        return render(request, 'main/post.html', {'post': post})
+    
+    def post(self, request, postId):
+        if request.POST['type'] == 'delete':
+            Post.objects.filter(id=postId).delete()
+            return redirect('/')
+        
+        elif request.POST['type'] == 'update':
+            pass
+            
+        return redirect('/')

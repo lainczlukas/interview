@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+{% for message in messages%}
+    <p>{{message}}</p>
+{% endfor %}
+
+{% if post %}
+<div>
+    <p>id: {{post.id}}</p>
+    <p>userId: {{post.userId}}</p>
+    <p>title: {{post.title}}</p>
+    <p>body: {{post.body}}</p>
+</div>
+{% endif %}
+
+<div style="display: flex; justify-content: space-around; align-items: center; margin-top: 100px;">
+    <form action="/post/{{post.id}}" method="post">
+        {% csrf_token %}
+        <label for="id">New post title:</label>
+        <input type="text" id="id" name="title" minlength="1" maxlength="100" value=""><br><br>
+        <label for="id">New post body:</label>
+        <input type="text" id="id" name="body" minlength="1" maxlength="400" value=""><br><br>
+        <button type="submit" value="update" name="type">Update</button>
+        <button type="submit" value="delete" name="type">Delete</button>
+    </form>
+</div>
+
+{% endblock %}

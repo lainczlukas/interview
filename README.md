@@ -30,6 +30,7 @@ Website will run on localhost:8000
 
 
 ### Development
-Celkovy cas 7h
-setup - 4h
+Celkovy cas 8.5h
+setup (docker-compose) - 5h
 app - 3h
+dokumentacia - 0.5h

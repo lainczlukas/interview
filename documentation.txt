@@ -1,0 +1,37 @@
+GET / 
+    response: HomePage view
+
+POST /
+    body: {'type': 'id', 'id': my_id}
+    response:
+        200: HomePage view with post data displayed
+        400: HomePage view
+
+POST /
+    body: {'type': 'userId', 'userId': userId}
+    response:
+        200: HomePage view with user posts data displayed
+        400: HomePage view
+
+POST /
+    body: {'type': 'new', 'userId': userId, 'title': title, 'body': body}
+    response:
+        200: HomePage view + new post created
+        400: HomePage view
+
+GET posts/<int:postId>
+    response:
+        200: PostPage view with post data displayed
+        400: HomePage view
+
+POST posts/<int:postId>
+    body: {'type': delete}
+    response:
+        200: HomePage + post deleted
+        400: Error page
+
+POST posts/<int:postId>
+    body: {'type': update, 'userId': userId, 'title': title, 'body': body}
+    response:
+        200: HPostPage view with updated post data displayed
+        400: Error page

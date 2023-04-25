@@ -46,10 +46,7 @@ class MyHome(View):
             users = res.json()
 
             for user in users:
-                print("User:", user['id'])
-                print("My user:", userId)
                 if int(user['id']) == int(userId):
-                    print("We did it")
                     title = request.POST['title']
                     body = request.POST['body']
                     id = random.randint(101,999999)
@@ -63,8 +60,6 @@ class MyHome(View):
 
             messages.error(request, "Invalid userId - no such user")
             return render(request, 'main/home.html', {})
-
-
         
         return HttpResponse("Incorrect post request to homepage")
 
